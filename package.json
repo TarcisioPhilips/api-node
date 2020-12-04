@@ -4,6 +4,7 @@
   "description": "Desenvolvimento de uma rest api para estudo",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,6 +23,10 @@
   },
   "homepage": "https://github.com/Taaaaaar/stunning-octo-spork#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }
