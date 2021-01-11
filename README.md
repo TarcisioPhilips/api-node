@@ -16,6 +16,8 @@ End. Aliado a isso, recomendamos fortemente que analise o código em sua estrutu
 qualquer dúvida que esbarrar no caminho, pesquise na internet ou na seção comunidade dessa repo.
 Lembre-se das frases do grande Steve Jobs:
 > Você pode encarar um erro como uma besteira a ser esquecida ou como um resultado que aponta uma nova direção.
+
 ...ou melhor...
+
 > Você pode encarar um *Error* como uma **besteira** a ser esquecida ou como uma *Promisse.resolve* que aponta uma nova direção.
 
