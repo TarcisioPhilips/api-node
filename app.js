@@ -1,45 +1,38 @@
 const express = require("express");
-const app = express();
 const morgan = require("morgan");
-const bodyParser = require("body-parser");
+const app = express();
 
-const rotaProdutos = require("./src/routes/produtos");
-const rotaPedidos = require("./src/routes/pedidos");
+class App {
+  constructor() {
+    this.server = express();
+    app.use(morgan("dev"));
+    app.use((req, res, next) => {
+      res.header("Access-Control-Allow-Origin", "*");
+      res.header(
+        "Access-Control-Allow-Header",
+        "Origin, C-Requrested-With, Content-Type, Accept, Authorization"
+      );
 
-app.use(morgan("dev"));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Header",
-    "Origin, C-Requrested-With, Content-Type, Accept, Authorization"
-  );
-
-  if (req.method === "OPTIONS") {
-    res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
-    return res.status(200).send({});
+      if (req.method === "OPTIONS") {
+        res.header(
+          "Access-Control-Allow-Methods",
+          "PUT, POST, PATCH, DELETE, GET"
+        );
+        return res.status(200).send({});
+      }
+      next();
+    });
+    this.middleware();
+    this.routes();
   }
-  next();
-});
 
-app.use("/produtos", rotaProdutos);
-app.use("/pedidos", rotaPedidos);
+  middleware() {
+    this.server.use(express.json());
+  }
 
-app.use((req, res, next) => {
-  const erro = new Error("Não encontrado");
-  erro.status = 404;
-  next(erro);
-});
+  routes() {
+    this.server.use(require("./routes"));
+  }
+}
 
-app.use((error, req, res, next) => {
-  res.status(error.status || 500);
-  return res.send({
-    erro: {
-      mensagem: error.message,
-    },
-  });
-});
-
-module.exports = app;
+module.exports = new App().server;
